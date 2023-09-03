@@ -1,0 +1,19 @@
+nameOverride: ""
+namespaceOverride: ""
+fullnameOverride: ""
+
+commonLabels: {}
+
+frontend:
+  image:
+    repository: "hhk7734/wiki-loliot-net"
+    tag: "1.0"
+    pullPolicy: IfNotPresent
+
+  podLabels: {}
+
+  resources: {}
+
+  affinity: {}
+
+  tolerations: []

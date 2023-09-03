@@ -1,0 +1,16 @@
+frontend:
+  image:
+    repository: "hhk7734/wiki-loliot-net"
+    tag: "1.0"
+    pullPolicy: Always
+
+  resources:
+    requests:
+      memory: 10Mi
+    limits:
+      memory: 64Mi
+
+  tolerations:
+    - key: node-role.kubernetes.io/master
+      operator: Exists
+      effect: NoSchedule
