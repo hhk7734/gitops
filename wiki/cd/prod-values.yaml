@@ -1,7 +1,7 @@
 frontend:
   image:
     repository: ghcr.io/hhk7734/wiki
-    tag: "9cd384ac"
+    tag: "58f884ad"
   resources:
     requests:
       memory: 10Mi
