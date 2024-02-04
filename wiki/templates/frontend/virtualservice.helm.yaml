@@ -8,7 +8,7 @@ metadata:
     {{- include "wiki.frontend.labels" . | nindent 4 }}
 spec:
   gateways:
-    - istio-system/default-gateway
+    - loliot/gateway
   hosts:
     - wiki.loliot.net
     - loliot.net
@@ -25,4 +25,4 @@ spec:
         - destination:
             host: {{ include "wiki.frontend.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
             port:
-              number: 8080
+              number: {{ .Values.frontend.service.port }}
