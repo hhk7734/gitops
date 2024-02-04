@@ -11,3 +11,12 @@ app: {{ include "wiki.frontend.fullname" . }}
 {{- include "wiki.labels" . }}
 {{ include "wiki.frontend.matchLabels" . }}
 {{- end }}
+
+
+{{- define "wiki.frontend.serviceAccountName" -}}
+{{- if .Values.frontend.serviceAccount.create }}
+{{- default (include "wiki.frontend.fullname" .) .Values.frontend.serviceAccount.name }}
+{{- else }}
+{{- default "default" .Values.frontend.serviceAccount.name }}
+{{- end }}
+{{- end }}

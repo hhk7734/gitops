@@ -1,3 +1,5 @@
+imagePullSecrets:
+  - name: hhk7734-ghcr
 frontend:
   image:
     repository: ghcr.io/hhk7734/wiki
@@ -7,8 +9,6 @@ frontend:
       memory: 10Mi
     limits:
       memory: 64Mi
-  imagePullSecrets:
-    - name: hhk7734-ghcr
   affinity:
     nodeAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:

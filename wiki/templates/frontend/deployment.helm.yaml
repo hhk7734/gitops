@@ -3,11 +3,13 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "wiki.frontend.fullname" . }}
-  namespace: {{ include "wiki.namespace" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "wiki.frontend.labels" . | nindent 4 }}
 spec:
-  revisionHistoryLimit: 3
+  {{- if not .Values.frontend.autoscaling.enabled }}
+  replicas: {{ .Values.frontend.replicaCount }}
+  {{- end }}
   selector:
     matchLabels:
       {{- include "wiki.frontend.matchLabels" . | nindent 6 }}
@@ -19,14 +21,18 @@ spec:
         {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
-      serviceAccountName: {{ include "wiki.frontend.fullname" . }}
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "wiki.frontend.serviceAccountName" . }}
       containers:
-        - name: {{ include "wiki.frontend.fullname" . }}
+        - name: main
           image: "{{ .Values.frontend.image.repository }}:{{ default "latest" .Values.frontend.image.tag }}"
           imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 80
+              containerPort: {{ .Values.frontend.service.port }}
               protocol: TCP
           resources:
             {{- toYaml .Values.frontend.resources | nindent 12 }}
@@ -39,10 +45,6 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.namespace
-      {{- with .Values.frontend.imagePullSecrets }}
-      imagePullSecrets:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       terminationGracePeriodSeconds: 60
       {{- with .Values.frontend.affinity }}
       affinity:

@@ -3,7 +3,7 @@ apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
   name: {{ include "wiki.frontend.fullname" . }}
-  namespace: {{ include "wiki.namespace" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
     {{- include "wiki.frontend.labels" . | nindent 4 }}
 spec:
@@ -23,6 +23,6 @@ spec:
             prefix: /
       route:
         - destination:
-            host: {{ include "wiki.frontend.fullname" . }}.{{ include "wiki.namespace" . }}.svc.cluster.local
+            host: {{ include "wiki.frontend.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
             port:
               number: 8080

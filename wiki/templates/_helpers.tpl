@@ -2,10 +2,6 @@
 {{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
 {{- end }}
 
-{{- define "wiki.namespace" -}}
-{{- default .Release.Namespace .Values.namespaceOverride | trunc 63 | trimSuffix "-" }}
-{{- end }}
-
 {{- define "wiki.fullname" -}}
 {{- if .Values.fullnameOverride }}
 {{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
@@ -28,7 +24,9 @@
 {{ $name }}: {{ tpl $value $ }}
 {{ end -}}
 helm.sh/chart: {{ include "wiki.chart" . }}
-app.kubernetes.io/part-of: {{ include "wiki.name" . }}
+{{- if .Chart.AppVersion }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+{{- end }}
 app.kubernetes.io/managed-by: {{ .Release.Service }}
 app.kubernetes.io/created-by: "hhk7734@gmail.com"
 {{- end }}

@@ -1,8 +1,9 @@
 nameOverride: ""
-namespaceOverride: ""
 fullnameOverride: ""
 
 commonLabels: {}
+
+imagePullSecrets: []
 
 frontend:
   image:
@@ -10,12 +11,26 @@ frontend:
     tag: "1.0"
     pullPolicy: IfNotPresent
 
+  serviceAccount:
+    create: true
+    name: ""
+
   podLabels: {}
 
   resources: {}
 
-  imagePullSecrets: []
-
   affinity: {}
 
   tolerations: []
+
+  service:
+    type: ClusterIP
+    port: 80
+
+  replicaCount: 1
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 5
+    targetCPUUtilizationPercentage: 80
+    targetMemoryUtilizationPercentage:
