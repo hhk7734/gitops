@@ -3,7 +3,7 @@ imagePullSecrets:
 frontend:
   image:
     repository: ghcr.io/hhk7734/wiki
-    tag: "b8f8fb5b"
+    tag: "3d7b5c0d"
   resources:
     requests:
       memory: 10Mi
