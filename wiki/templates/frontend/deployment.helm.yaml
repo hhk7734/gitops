@@ -28,7 +28,7 @@ spec:
       serviceAccountName: {{ include "wiki.frontend.serviceAccountName" . }}
       containers:
         - name: main
-          image: "{{ .Values.frontend.image.repository }}:{{ default "latest" .Values.frontend.image.tag }}"
+          image: "{{ .Values.frontend.image.repository }}:{{ .Values.frontend.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.frontend.image.pullPolicy }}
           ports:
             - name: http

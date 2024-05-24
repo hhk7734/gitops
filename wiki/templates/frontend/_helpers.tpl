@@ -5,6 +5,9 @@
 {{- define "wiki.frontend.matchLabels" -}}
 app.kubernetes.io/name: {{ include "wiki.frontend.fullname" . }}
 app: {{ include "wiki.frontend.fullname" . }}
+{{- /*
+app.kubernetes.io/instance: {{ .Release.Name }}
+*/}}
 {{- end }}
 
 {{- define "wiki.frontend.labels" }}
